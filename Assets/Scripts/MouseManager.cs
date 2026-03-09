@@ -14,16 +14,18 @@ public class MouseManager : MonoBehaviour
     [Header("Slime")]
     public Transform slimeTransform;
     public Rigidbody slimeRigidbody;
+    public Vector3 originalSlimePosition;
 
-    // Update is called once per frame
+    void Start()
+    {
+        originalSlimePosition = slimeTransform.position;
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             print("Click!");
-            slimeRigidbody.isKinematic = false;
-            slimeRigidbody.AddForce(Vector3.forward * launchForce, ForceMode.Impulse);
-            slimeRigidbody.AddForce(Vector3.up * launchForce / 2, ForceMode.Impulse);
         }
         if (Input.GetMouseButton(0))
         {
@@ -33,15 +35,19 @@ public class MouseManager : MonoBehaviour
                 mouseDifference.y * 1.2f,
                 mouseDifference.z * 1.5f
             );
+            slimeTransform.position = originalSlimePosition - launchVector / 400;
             launchVector.Normalize();
         }
         if (Input.GetMouseButtonUp(0))
         {
-            print("Release");
+            print("Release"); 
+            slimeRigidbody.isKinematic = false;
+            slimeRigidbody.AddForce(Vector3.forward * launchForce, ForceMode.Impulse);
+            slimeRigidbody.AddForce(Vector3.up * launchForce / 2, ForceMode.Impulse);
         }
         if (Input.GetKeyDown("space"))
         {
-            slimeTransform.position = clickStartLocation;
+            slimeTransform.position = originalSlimePosition;
             slimeRigidbody.isKinematic = true;
         }
     }

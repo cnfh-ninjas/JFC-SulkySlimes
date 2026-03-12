@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class MouseManager : MonoBehaviour
 {
-    [Header("Mouse Info")]
     public Vector3 clickStartLocation;
 
-    [Header("Physics")]
     public Vector3 launchVector;
     public float launchForce;
 
-    [Header("Slime")]
     public Transform slimeTransform;
     public Rigidbody slimeRigidbody;
     public Vector3 originalSlimePosition;
+
+    public LivesManager livesManager;
 
     void Start()
     {
@@ -23,16 +22,20 @@ public class MouseManager : MonoBehaviour
 
     void Update()
     {
+        if(livesManager.lives <= 0)
+        {
+            return;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             print("Click!");
         }
         if (Input.GetMouseButton(0))
         {
-            Vector3 mouseDifference = clickStartLocation - Input.mousePosition;
+            Vector3 mouseDifference = clickStartLocation - Input.mousePosition * 2;
             launchVector = new Vector3(
                 mouseDifference.x * 1f,
-                mouseDifference.y * 1.2f,
+                mouseDifference.y *  1.2f,
                 mouseDifference.z * 1.5f
             );
             slimeTransform.position = originalSlimePosition - launchVector / 400;
@@ -49,6 +52,7 @@ public class MouseManager : MonoBehaviour
         {
             slimeTransform.position = originalSlimePosition;
             slimeRigidbody.isKinematic = true;
+            livesManager.RemoveLife();
         }
     }
 }

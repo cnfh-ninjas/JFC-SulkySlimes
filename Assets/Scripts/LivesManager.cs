@@ -7,6 +7,7 @@ public class LivesManager : MonoBehaviour
     public int lives;
     public GameObject[] hearts;
 
+    public LivesManager livesManager;
     public void RemoveLife()
     {
         lives -= 1;

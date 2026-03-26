@@ -1152,6 +1152,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  livesManager: {fileID: 450050381}
 --- !u!1001 &538259301
 PrefabInstance:
   m_ObjectHideFlags: 0
